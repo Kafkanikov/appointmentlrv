@@ -24,6 +24,7 @@
                                 <th>Title</th>
                                 <th>Client</th>
                                 <th>Host</th>
+                                <th>Location</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
                                 <th>Actions</th>
@@ -35,6 +36,13 @@
                                     <td>{{ $appointment->title }}</td>
                                     <td>{{ $appointment->client->name }}</td>
                                     <td>{{ $appointment->host->name }}</td>
+                                    <td>
+                                        @if($appointment->location)
+                                            <span class="badge bg-info">{{ $appointment->location->name }}</span>
+                                        @else
+                                            <span class="text-muted">No location</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $appointment->start_time->format('Y-m-d H:i') }}</td>
                                     <td>{{ $appointment->end_time->format('Y-m-d H:i') }}</td>
                                     <td>
@@ -52,7 +60,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6">You have no appointments.</td>
+                                    <td colspan="7">You have no appointments.</td>
                                 </tr>
                             @endforelse
                         </tbody>

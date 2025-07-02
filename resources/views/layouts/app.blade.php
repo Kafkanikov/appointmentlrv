@@ -38,6 +38,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('appointments.index') }}">My Appointments</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('locations.index') }}">Locations</a>
+                            </li>
                         @endauth
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('about') }}">About</a>

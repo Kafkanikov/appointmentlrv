@@ -36,6 +36,25 @@
                             @enderror
                         </div>
 
+                        <!-- Location Selection -->
+                        <div class="form-group mb-3">
+                            <label for="location_id">Location (Optional)</label>
+                            <select id="location_id" class="form-control @error('location_id') is-invalid @enderror" name="location_id">
+                                <option value="">Select a Location (Optional)</option>
+                                @foreach($locations as $location)
+                                    <option value="{{ $location->location_id }}" {{ old('location_id') == $location->location_id ? 'selected' : '' }}>
+                                        {{ $location->name }}
+                                        @if($location->address) - {{ $location->address }} @endif
+                                        @if($location->capacity) (Capacity: {{ $location->capacity }}) @endif
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('location_id')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                            @enderror
+                            <small class="form-text text-muted">Choose a location where the appointment will take place</small>
+                        </div>
+
                         <!-- Start Time -->
                         <div class="form-group mb-3">
                             <label for="start_time">Start Time</label>

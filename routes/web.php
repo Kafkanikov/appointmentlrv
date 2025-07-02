@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PageController;
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('appointments', AppointmentController::class);
+    Route::resource('locations', LocationController::class);
+    Route::patch('locations/{location}/toggle-status', [LocationController::class, 'toggleStatus'])->name('locations.toggle-status');
 });
 
 Route::get('/about', [PageController::class, 'about'])->name('about');

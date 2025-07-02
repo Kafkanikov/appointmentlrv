@@ -18,6 +18,7 @@ class Appointment extends Model
         'description',
         'client_id',
         'host_id',
+        'location_id',
         'start_time',
         'end_time',
     ];
@@ -34,5 +35,10 @@ class Appointment extends Model
     public function host()
     {
         return $this->belongsTo(User::class, 'host_id');
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class, 'location_id');
     }
 }

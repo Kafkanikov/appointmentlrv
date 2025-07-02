@@ -39,6 +39,23 @@
                             @enderror
                         </div>
 
+                        <!-- Location Selection -->
+                        <div class="form-floating mb-3">
+                            <select id="location_id" class="form-select @error('location_id') is-invalid @enderror" name="location_id">
+                                <option value="">Select a Location (Optional)</option>
+                                @foreach($locations as $location)
+                                    <option value="{{ $location->location_id }}" {{ old('location_id', $appointment->location_id) == $location->location_id ? 'selected' : '' }}>
+                                        {{ $location->name }}
+                                        @if($location->address) - {{ $location->address }} @endif
+                                    </option>
+                                @endforeach
+                            </select>
+                            <label for="location_id"><i class="bi bi-geo-alt me-2"></i>Location (Optional)</label>
+                            @error('location_id')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                            @enderror
+                        </div>
+
                         <div class="row">
                             <!-- Start Time -->
                             <div class="col-md-6">

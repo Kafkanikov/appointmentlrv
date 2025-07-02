@@ -14,6 +14,19 @@
                     <hr>
                     <p><strong>Client:</strong> {{ $appointment->client->name }}</p>
                     <p><strong>Host:</strong> {{ $appointment->host->name }}</p>
+                    <p><strong>Location:</strong> 
+                        @if($appointment->location)
+                            {{ $appointment->location->name }}
+                            @if($appointment->location->address)
+                                <br><small class="text-muted">{{ $appointment->location->address }}</small>
+                            @endif
+                            @if($appointment->location->floor)
+                                <br><small class="text-muted">Floor: {{ $appointment->location->floor }}</small>
+                            @endif
+                        @else
+                            <span class="text-muted">No location specified</span>
+                        @endif
+                    </p>
                     <p><strong>From:</strong> {{ $appointment->start_time->format('l, F j, Y \a\t H:i A') }}</p>
                     <p><strong>To:</strong> {{ $appointment->end_time->format('l, F j, Y \a\t H:i A') }}</p>
                 </div>

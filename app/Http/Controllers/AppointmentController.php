@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\User;
+use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +17,7 @@ class AppointmentController extends Controller
         // Get appointments where the user is either the client or the host
         $appointments = Appointment::where('client_id', $userId)
             ->orWhere('host_id', $userId)
-            ->with(['client', 'host']) // Eager load relationships
+            ->with(['client', 'host', 'location']) // Eager load relationships including location
             ->orderBy('start_time', 'desc')
             ->get();
 
@@ -30,7 +31,9 @@ class AppointmentController extends Controller
     {
         // Get all users except the currently logged-in one to select as a host
         $hosts = User::where('user_id', '!=', Auth::id())->get();
-        return view('appointments.create', compact('hosts'));
+        // Get all active locations
+        $locations = Location::active()->orderBy('name')->get();
+        return view('appointments.create', compact('hosts', 'locations'));
     }
 
     /**
@@ -41,6 +44,7 @@ class AppointmentController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'host_id' => 'required|exists:tb_users,user_id',
+            'location_id' => 'nullable|exists:tb_locations,location_id',
             'start_time' => 'required|date|after:now',
             'end_time' => 'required|date|after:start_time',
             'description' => 'nullable|string',
@@ -74,7 +78,8 @@ class AppointmentController extends Controller
         $this->authorizeUserAction($appointment);
 
         $hosts = User::where('user_id', '!=', Auth::id())->get();
-        return view('appointments.edit', compact('appointment', 'hosts'));
+        $locations = Location::active()->orderBy('name')->get();
+        return view('appointments.edit', compact('appointment', 'hosts', 'locations'));
     }
 
 
@@ -89,6 +94,7 @@ class AppointmentController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'host_id' => 'required|exists:tb_users,user_id',
+            'location_id' => 'nullable|exists:tb_locations,location_id',
             'start_time' => 'required|date',
             'end_time' => 'required|date|after:start_time',
             'description' => 'nullable|string',
