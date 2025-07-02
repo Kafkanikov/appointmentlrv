@@ -13,8 +13,8 @@ A simple and elegant appointment scheduling application built with Laravel 10, f
 
 ## Screenshots
 
-![Dashboard](docs/dashboard-preview.png)
-![Appointments](docs/appointments-preview.png)
+![Dashboard](docs/dashboard.png)
+![Appointments](docs/appointments.png)
 
 ## Requirements
 
