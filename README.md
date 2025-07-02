@@ -1,66 +1,283 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Appointify - Laravel Appointment Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple and elegant appointment scheduling application built with Laravel 10, featuring user authentication, appointment management, and a clean Bootstrap interface.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- 🔐 **User Authentication** - Login, registration, and logout functionality
+- 📅 **Appointment Management** - Create, view, edit, and cancel appointments
+- 👥 **Multi-user Support** - Users can schedule appointments with other users
+- 🎨 **Responsive Design** - Clean Bootstrap interface that works on all devices
+- 🔒 **Authorization** - Users can only manage their own appointments
+- 📊 **Dashboard** - Overview of appointments and statistics
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Screenshots
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+![Dashboard](docs/dashboard-preview.png)
+![Appointments](docs/appointments-preview.png)
 
-## Learning Laravel
+## Requirements
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP >= 8.1
+- Composer
+- Node.js & NPM
+- MySQL or another supported database
+- Git
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Clone the Repository
 
-## Laravel Sponsors
+```bash
+git clone https://github.com/Kafkanikov/appointmentlrv.git
+cd appointmentlrv
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 2. Install Dependencies
 
-### Premium Partners
+```bash
+# Install PHP dependencies
+composer install
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+# Install JavaScript dependencies
+npm install
+```
+
+### 3. Environment Setup
+
+```bash
+# Copy environment file
+cp .env.example .env
+
+# Generate application key
+php artisan key:generate
+```
+
+### 4. Database Configuration
+
+Edit your `.env` file with your database credentials:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=appointment_app
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+### 5. Database Setup
+
+```bash
+# Run migrations to create tables
+php artisan migrate
+
+# Seed the database with sample users (optional)
+php artisan db:seed --class=UserSeeder
+```
+
+### 6. Compile Assets
+
+```bash
+# Compile assets for development
+npm run dev
+
+# OR compile for production
+npm run build
+```
+
+### 7. Start the Development Server
+
+```bash
+php artisan serve
+```
+
+Visit `http://localhost:8000` in your browser.
+
+## Default Users (if seeded)
+
+| Email | Password | Name |
+|-------|----------|------|
+| john@example.com | password123 | John Doe |
+| jane@example.com | password123 | Jane Smith |
+| admin@example.com | password123 | Admin User |
+
+## Project Structure
+
+```
+appointment-app/
+├── app/
+│   ├── Http/Controllers/
+│   │   ├── AppointmentController.php    # Appointment CRUD operations
+│   │   ├── HomeController.php           # Dashboard logic
+│   │   └── PageController.php           # Static pages
+│   └── Models/
+│       ├── User.php                     # User model (custom tb_users table)
+│       └── Appointment.php              # Appointment model
+├── database/
+│   ├── migrations/
+│   │   ├── create_tb_users_table.php    # Custom users table
+│   │   └── create_appointments_table.php
+│   └── seeders/
+│       └── UserSeeder.php               # Sample user data
+├── resources/
+│   └── views/
+│       ├── appointments/                # Appointment views
+│       │   ├── index.blade.php         # List appointments
+│       │   ├── create.blade.php        # Create appointment
+│       │   ├── edit.blade.php          # Edit appointment
+│       │   └── show.blade.php          # View appointment
+│       ├── layouts/
+│       │   └── app.blade.php           # Main layout
+│       └── home.blade.php              # Dashboard
+└── routes/
+    └── web.php                         # Application routes
+```
+
+## Database Schema
+
+### tb_users Table
+- `user_id` (Primary Key)
+- `name`
+- `email`
+- `password`
+- `email_verified_at`
+- `remember_token`
+- `created_at`
+- `updated_at`
+
+### appointments Table
+- `appointment_id` (Primary Key)
+- `title`
+- `description`
+- `client_id` (Foreign Key to tb_users)
+- `host_id` (Foreign Key to tb_users)
+- `start_time`
+- `end_time`
+- `created_at`
+- `updated_at`
+
+## Usage
+
+### Creating an Appointment
+
+1. Log in to your account
+2. Navigate to "My Appointments"
+3. Click "Create New Appointment"
+4. Fill in the appointment details:
+   - Title
+   - Host (select from available users)
+   - Start and end times
+   - Description (optional)
+5. Click "Create Appointment"
+
+### Managing Appointments
+
+- **View**: Click on any appointment title to see full details
+- **Edit**: Click "Edit" button (only available for appointments you created)
+- **Cancel**: Click "Cancel Appointment" and confirm (only for your appointments)
+
+### Dashboard Features
+
+- View upcoming appointments
+- Quick statistics
+- Recent activity overview
+
+## API Routes
+
+The application uses standard Laravel resource routes:
+
+```php
+GET    /appointments          # List all user's appointments
+GET    /appointments/create   # Show create form
+POST   /appointments          # Store new appointment
+GET    /appointments/{id}     # Show specific appointment
+GET    /appointments/{id}/edit # Show edit form
+PUT    /appointments/{id}     # Update appointment
+DELETE /appointments/{id}     # Delete appointment
+```
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## Code of Conduct
+## Development
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Running Tests
 
-## Security Vulnerabilities
+```bash
+php artisan test
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Code Style
+
+```bash
+# Run PHP CS Fixer
+vendor/bin/php-cs-fixer fix
+```
+
+### Watch Assets During Development
+
+```bash
+npm run dev
+# or for auto-recompiling
+npm run watch
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Database Connection Error**
+   - Check your `.env` database credentials
+   - Ensure your database server is running
+   - Verify the database exists
+
+2. **Permission Errors**
+   ```bash
+   chmod -R 775 storage bootstrap/cache
+   ```
+
+3. **Assets Not Loading**
+   ```bash
+   npm run dev
+   php artisan storage:link
+   ```
+
+4. **Migration Errors**
+   ```bash
+   php artisan migrate:fresh --seed
+   ```
+
+## Security
+
+- All routes are protected with authentication middleware
+- CSRF protection enabled on all forms
+- SQL injection protection through Eloquent ORM
+- Password hashing using Laravel's built-in Hash facade
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Contact
+
+- **GitHub**: [Kafkanikov](https://github.com/Kafkanikov)
+- **Project Repository**: [appointmentlrv](https://github.com/Kafkanikov/appointmentlrv)
+
+## Changelog
+
+### v1.0.0 (2025-07-02)
+- Initial release
+- User authentication system
+- Appointment CRUD operations
+- Responsive dashboard
+- Custom database schema with tb_users table
+
+---
+
+**Built with ❤️ using Laravel Framework**
